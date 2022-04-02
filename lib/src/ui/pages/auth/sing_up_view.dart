@@ -46,7 +46,7 @@ class _SingUpFormWidgetState extends ConsumerState<SingUpFormWidget> {
         width: double.infinity,
         child: Column(children: [
           Expanded(
-              child: PageView(controller: _pageViewController, children: [
+              child: PageView(physics: const NeverScrollableScrollPhysics(), controller: _pageViewController, children: [
             _PersonalDataFormWidget(formKey: _personalDataFormKey),
             _AddressFormWidget(formKey: _addressDataFormKey),
             _AccountFormWidget(formKey: _accountDatFormKey)
@@ -133,34 +133,38 @@ class _PersonalDataFormWidget extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text(AppConsts.informativeConst["COMPLETE_PERSONAL_DATA"]!, style: TextStyle(color: Colors.black, fontSize: size.width * 0.035)),
             SizedBox(height: size.height * 0.03),
-            CustomTextFormFieldWidget(
-                title: AppConsts.informativeConst["NAME"]!,
-                initialValue: ref.read(userNotifierProvider).user.name,
-                hint: AppConsts.informativeConst["NAME_HINT"]!,
-                icon: Icons.person,
-                rounded: true,
-                validator: FormsVerifications.verifyName,
-                onChanged: (name) => ref.read(userNotifierProvider).user.name = name),
-            SizedBox(height: size.height * 0.02),
-            CustomTextFormFieldWidget(
-                title: AppConsts.informativeConst["LAST_NAME"]!,
-                initialValue: ref.read(userNotifierProvider).user.lastname,
-                hint: AppConsts.informativeConst["LAST_NAME_HINT"]!,
-                icon: Icons.person,
-                rounded: true,
-                validator: FormsVerifications.verifyLastName,
-                onChanged: (lastname) => ref.read(userNotifierProvider).user.lastname = lastname),
-            SizedBox(height: size.height * 0.02),
-            Padding(
-                padding: EdgeInsets.only(left: size.width * 0.02),
-                child: Row(children: [
-                  Expanded(child: Text(AppConsts.informativeConst["BIRTHDATE"]!, style: TextStyle(fontSize: size.width * 0.04))),
-                  ElevatedButton(
-                      onPressed: () {
-                        _selectDate(context);
-                      },
-                      child: Text(AppConsts.buttonConst["SELECT"]!))
-                ]))
+            Expanded(
+              child: ListView(physics: const BouncingScrollPhysics(), children: [
+                CustomTextFormFieldWidget(
+                    title: AppConsts.informativeConst["NAME"]!,
+                    initialValue: ref.read(userNotifierProvider).user.name,
+                    hint: AppConsts.informativeConst["NAME_HINT"]!,
+                    icon: Icons.person,
+                    rounded: true,
+                    validator: FormsVerifications.verifyName,
+                    onChanged: (name) => ref.read(userNotifierProvider).user.name = name),
+                SizedBox(height: size.height * 0.02),
+                CustomTextFormFieldWidget(
+                    title: AppConsts.informativeConst["LAST_NAME"]!,
+                    initialValue: ref.read(userNotifierProvider).user.lastname,
+                    hint: AppConsts.informativeConst["LAST_NAME_HINT"]!,
+                    icon: Icons.person,
+                    rounded: true,
+                    validator: FormsVerifications.verifyLastName,
+                    onChanged: (lastname) => ref.read(userNotifierProvider).user.lastname = lastname),
+                SizedBox(height: size.height * 0.02),
+                Padding(
+                    padding: EdgeInsets.only(left: size.width * 0.02),
+                    child: Row(children: [
+                      Expanded(child: Text(AppConsts.informativeConst["BIRTHDATE"]!, style: TextStyle(fontSize: size.width * 0.04))),
+                      ElevatedButton(
+                          onPressed: () {
+                            _selectDate(context);
+                          },
+                          child: Text(AppConsts.buttonConst["SELECT"]!))
+                    ]))
+              ]),
+            )
           ]));
     });
   }
@@ -273,22 +277,26 @@ class _AccountFormWidget extends StatelessWidget {
           return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text(AppConsts.informativeConst["COMPLETE_ACCOUNT_DATA"]!, style: TextStyle(color: Colors.black, fontSize: size.width * 0.035)),
             SizedBox(height: size.height * 0.03),
-            CustomTextFormFieldWidget(
-                textInputType: TextInputType.emailAddress,
-                title: AppConsts.informativeConst["EMAIL"]!,
-                hint: AppConsts.informativeConst["EMAIL_HINT"]!,
-                icon: Icons.alternate_email,
-                validator: FormsVerifications.validateEmail,
-                rounded: true,
-                onChanged: (email) => ref.read(userNotifierProvider).user.email = email),
-            SizedBox(height: size.height * 0.03),
-            CustomTextFormFieldWidget(
-                title: AppConsts.informativeConst["PASSWORD"]!,
-                hint: AppConsts.informativeConst["PASSWORD_HINT"]!,
-                icon: Icons.lock,
-                rounded: true,
-                obscureText: true,
-                onChanged: (password) => ref.read(userNotifierProvider).user.password = password),
+            Expanded(
+              child: ListView(physics: const BouncingScrollPhysics(), children: [
+                CustomTextFormFieldWidget(
+                    textInputType: TextInputType.emailAddress,
+                    title: AppConsts.informativeConst["EMAIL"]!,
+                    hint: AppConsts.informativeConst["EMAIL_HINT"]!,
+                    icon: Icons.alternate_email,
+                    validator: FormsVerifications.validateEmail,
+                    rounded: true,
+                    onChanged: (email) => ref.read(userNotifierProvider).user.email = email),
+                SizedBox(height: size.height * 0.03),
+                CustomTextFormFieldWidget(
+                    title: AppConsts.informativeConst["PASSWORD"]!,
+                    hint: AppConsts.informativeConst["PASSWORD_HINT"]!,
+                    icon: Icons.lock,
+                    rounded: true,
+                    obscureText: true,
+                    onChanged: (password) => ref.read(userNotifierProvider).user.password = password)
+              ]),
+            )
           ]);
         }));
   }

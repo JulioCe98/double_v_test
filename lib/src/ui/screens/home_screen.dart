@@ -85,7 +85,7 @@ class _HomeScreenBodyWidget extends StatelessWidget {
                       //DATA
                       Expanded(
                           child: Container(
-                              padding: EdgeInsets.symmetric(vertical: size.height * 0.07),
+                              padding: EdgeInsets.symmetric(vertical: size.height * 0.06),
                               child: Column(children: [
                                 Text(AppConsts.informativeConst["COMPANY_DATA"]!,
                                     style: TextStyle(color: Colors.white, fontSize: size.width * 0.05, fontWeight: FontWeight.bold)),
